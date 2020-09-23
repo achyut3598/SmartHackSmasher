@@ -1,4 +1,4 @@
-As a **driver** ,I want my car to know when a problem happens so I can be safe as I travel in my vehicle.
+As a **driver**, I want my car to know when a problem happens so I can be and feel safe as I travel in my vehicle.
 
 As a **developer** working for a car manufacture, I want to make sure that I can use this modularized machine learning security template and extend it to other modules that we provide in our cars. 
 
