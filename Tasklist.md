@@ -77,7 +77,3 @@
 * Automated Car Object Detection and Road Sign Detection Module semi-supervised algorithm
 
 * * Implement a semi-supervised algorithm for both object detection as well as road sign detection modules to make sure that the algorithm trains itself based on new data that the car gets while driving 
-
-1. * 
-
-1. 
