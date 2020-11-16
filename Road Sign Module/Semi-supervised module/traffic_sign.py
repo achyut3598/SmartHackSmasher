@@ -23,7 +23,7 @@ for i in range(classes):
     for a in images:
         try:
             image = Image.open(path + '\\'+ a)
-            image = image.resize((30,30))
+            image = image.resize((64,64))
             image = np.array(image)
             data.append(image)
             labels.append(i)
@@ -95,7 +95,7 @@ data=[]
 
 for img in imgs:
     image = Image.open(img)
-    image = image.resize((30,30))
+    image = image.resize((64,64))
     data.append(np.array(image))
 
 X_test=np.array(data)

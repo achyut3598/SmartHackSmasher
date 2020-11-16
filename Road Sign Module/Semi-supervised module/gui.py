@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 
 import numpy
 from keras.models import load_model
-model = load_model('traffic_classifier.h5')
+model = load_model('my_model.h5')
 
 #Traffic sign labels
 classes = { 1:'Speed limit (20km/h)',
@@ -64,7 +64,7 @@ sign_image = Label(top)
 def classify(file_path):
     global label_packed
     image = Image.open(file_path)
-    image = image.resize((30,30))
+    image = image.resize((64,64))
     image = numpy.expand_dims(image, axis=0)
     image = numpy.array(image)
     print(image.shape)
@@ -75,7 +75,7 @@ def classify(file_path):
    
 
 def show_classify_button(file_path):
-    classify_b=Button(top,text="Classify Image",command=lambda: classify(file_path),padx=10,pady=5)
+    classify_b=Button(top,text="Detect",command=lambda: classify(file_path),padx=10,pady=5)
     classify_b.configure(background='#364156', foreground='white',font=('arial',10,'bold'))
     classify_b.place(relx=0.79,rely=0.46)
 
@@ -99,7 +99,7 @@ upload.configure(background='#364156', foreground='white',font=('arial',10,'bold
 upload.pack(side=BOTTOM,pady=50)
 sign_image.pack(side=BOTTOM,expand=True)
 label.pack(side=BOTTOM,expand=True)
-heading = Label(top, text="Know Your Traffic Sign",pady=20, font=('arial',20,'bold'))
+heading = Label(top, text="Traffic Sign Identifier",pady=20, font=('arial',20,'bold'))
 heading.configure(background='#CDCDCD',foreground='#364156')
 heading.pack()
 top.mainloop()
