@@ -10,7 +10,7 @@ import imutils
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
 
-#Traffic sign labels
+# Traffic sign labels
 classes = {1: 'Speed limit (20km/h)',
            2: 'Speed limit (30km/h)',
            3: 'Speed limit (50km/h)',
@@ -56,60 +56,64 @@ classes = {1: 'Speed limit (20km/h)',
            43: 'End no passing veh > 3.5 tons'}
 
 classesSet = {1: 'Speed',
-           2: 'Speed',
-           3: 'Speed',
-           4: 'Speed',
-           5: 'Speed',
-           6: 'Speed',
-           7: 'End',
-           8: 'Speed',
-           9: 'Speed',
-           10: 'No passing',
-           11: 'No passing',
-           12: 'Tri',
-           13: 'Priority road',
-           14: 'Yield',
-           15: 'Stop',
-           16: 'Vehicles',
-           17: 'Vehicles',
-           18: 'Vehicles',
-           19: 'Tri',
-           20: 'Tri',
-           21: 'Tri',
-           22: 'Tri',
-           23: 'Tri',
-           24: 'Tri',
-           25: 'Tri',
-           26: 'Tri',
-           27: 'Tri',
-           28: 'Tri',
-           29: 'Tri',
-           30: 'Tri',
-           31: 'Tri',
-           32: 'Tri',
-           33: 'End',
-           34: 'Arrow',
-           35: 'Arrow',
-           36: 'Arrow',
-           37: 'Arrow',
-           38: 'Arrow',
-           39: 'Arrow',
-           40: 'Arrow',
-           41: 'Arrow',
-           42: 'End',
-           43: 'End'}
+              2: 'Speed',
+              3: 'Speed',
+              4: 'Speed',
+              5: 'Speed',
+              6: 'Speed',
+              7: 'End',
+              8: 'Speed',
+              9: 'Speed',
+              10: 'No passing',
+              11: 'No passing',
+              12: 'Tri',
+              13: 'Priority road',
+              14: 'Yield',
+              15: 'Stop',
+              16: 'Vehicles',
+              17: 'Vehicles',
+              18: 'Vehicles',
+              19: 'Tri',
+              20: 'Tri',
+              21: 'Tri',
+              22: 'Tri',
+              23: 'Tri',
+              24: 'Tri',
+              25: 'Tri',
+              26: 'Tri',
+              27: 'Tri',
+              28: 'Tri',
+              29: 'Tri',
+              30: 'Tri',
+              31: 'Tri',
+              32: 'Tri',
+              33: 'End',
+              34: 'Arrow',
+              35: 'Arrow',
+              36: 'Arrow',
+              37: 'Arrow',
+              38: 'Arrow',
+              39: 'Arrow',
+              40: 'Arrow',
+              41: 'Arrow',
+              42: 'End',
+              43: 'End'}
+
 
 def semi_model_load(modelPath):
     model = load_model(modelPath)
     return model
 
+
 def sup_model_load(modelPath):
     model = load_model(modelPath)
     return model
 
+
 def unsup_model_load(modelPath):
     model = pickle.load(open(modelPath, 'rb'))
     return model
+
 
 def semi_image_handler(imagePath):
     rawImage = Image.open(imagePath)
@@ -118,14 +122,14 @@ def semi_image_handler(imagePath):
     data = np.expand_dims(data, axis=0)
     return data
 
+
 def sup_image_handler(imagePath):
-    size = (256, 256)
-    pixels = load_img(imagePath, target_size=size)
-    # convert to numpy array
-    pixels = img_to_array(pixels)
-    pixels = pixels.reshape(256, 256, 3)
-    pixels = (pixels - 127.5)/127.5
-    return pixels
+    rawImage = Image.open(imagePath)
+    editedImage = rawImage.resize((64, 64))
+    data = np.array(editedImage)
+    data = np.expand_dims(data, axis=0)
+    return data
+
 
 def unsup_image_handler(imagePath, bins=(8, 8, 8)):
     # Convert image to histogram
@@ -138,71 +142,78 @@ def unsup_image_handler(imagePath, bins=(8, 8, 8)):
         cv2.normalize(hist, hist)
     return [hist.flatten()]
 
+
 def semi_predict(semiModel, imagePath):
     myData = semi_image_handler(imagePath)
     pred = semiModel.predict_classes(myData)[0]
     return pred
 
+
 def sup_predict(supModel, imagePath):
     pixels = sup_image_handler(imagePath)
-    pred = supModel.predict_classes(pixels)[0]
+    pred = supModel.predict_classes([pixels])[0]
     return pred
+
 
 def unsup_predict(unsupModel, imagePath):
     features = unsup_image_handler(imagePath)
     pred = unsupModel.predict(features)[0]
     return int(pred)
 
+
 def predSign(myPred):
     return classes[myPred + 1]
+
 
 def predClass(myPred):
     return classesSet[myPred + 1]
 
+
 def analyze_road_sign(unsupModel, semiModel, supModel, imagePath):
     if unsupModel != None:
-        #logging.info("Unsupervised model exists. Prediction Started")
+        # logging.info("Unsupervised model exists. Prediction Started")
         unsupPred = unsup_predict(unsupModel, imagePath)
     if semiModel != None:
-        #logging.info("Semisupervised model exists. Prediction Started")
+        # logging.info("Semisupervised model exists. Prediction Started")
         semiPred = semi_predict(semiModel, imagePath)
     if supModel != None:
-        #logging.info("Supervised model exists. Prediction Started")
-        #supPred = sup_predict(supModel, imagePath)
-        supPred = 0
-    supPred = 0
+        logging.info("Supervised model exists. Prediction Started")
+        supPred = sup_predict(supModel, imagePath)
     if unsupPred == semiPred or unsupPred == supPred or semiPred == supPred:
         combinedVoteSign = True
     else:
         combinedVoteSign = False
-    if classesSet[unsupPred+1] == classesSet[semiPred+1] or classesSet[unsupPred+1] == classesSet[supPred+1] or classesSet[semiPred+1] == classesSet[supPred+1]:
+    if classesSet[unsupPred + 1] == classesSet[semiPred + 1] or classesSet[unsupPred + 1] == classesSet[supPred + 1] or \
+            classesSet[semiPred + 1] == classesSet[supPred + 1]:
         combinedVoteSet = True
     else:
         combinedVoteSet = False
-
 
     analysisResults = [combinedVoteSign, combinedVoteSet, unsupPred, semiPred, supPred, imagePath]
 
     return analysisResults
 
-#Sample Usage
+
+# Sample Usage
 def main():
-    #Sets up logging to be "time - name - level - message"
-    #logging.basicConfig(level=logging.INFO, filename='app.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    #logging.info("Start of Program")
+    # Sets up logging to be "time - name - level - message"
+    # logging.basicConfig(level=logging.INFO, filename='app.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # logging.info("Start of Program")
     unsupPath = "D:/School/2021/SD/knnHist.sav"
     semiPath = "D:/School/2021/SD/my_model.h5"
-    supPath = "D:/School/2021/SD/saved_model.pb"
-    imagePath = "D:/School/SD/archive/Test/00261.png"
-    #logging.info("Loading Unsupervised Model")
-    unsupModel = unsup_model_load(unsupPath)
-    #logging.info("Loading Semisupervised Model")
-    semiModel = semi_model_load(semiPath)
-    #logging.info("Loading Supervised Model")
-    #supModel = sup_model_load(supPath)
-    supModel = None
+    supPath = r"D:\Senior Project\New\RoadSign\ZachRoadSignModel.h5"
+    imagePath = r"D:\Senior Project\New\RoadSign\00128.png"
+    # logging.info("Loading Unsupervised Model")
+    # unsupModel = unsup_model_load(unsupPath)
+    unsupModel = None
+    # logging.info("Loading Semisupervised Model")
+    # semiModel = semi_model_load(semiPath)
+    semiModel = None
+    # logging.info("Loading Supervised Model")
+    supModel = sup_model_load(supPath)
     results = analyze_road_sign(unsupModel, semiModel, supModel, imagePath)
     print(results)
+
 
 if __name__ == "__main__":
     main()

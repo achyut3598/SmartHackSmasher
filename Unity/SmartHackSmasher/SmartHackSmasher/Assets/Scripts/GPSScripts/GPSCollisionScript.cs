@@ -50,16 +50,33 @@ public class GPSCollisionScript : MonoBehaviour
                     break;
                 case typeOfTrigger.RightTurn:
                     car.currentCarBehavior = GPSPlayerScript.carBehavior.RightTurn;
+                    if (car.isHackedCar)
+                    {
+                        demoScript.updateHackedGPSDirections("Go Straight\nYou will arive in\n500 feet");
+                    }
+                    else
+                    {
+                        demoScript.updateNormalGPSDirections("Go Straight\nYou will arive in\n500 feet");
+                    }
                     break;
                 case typeOfTrigger.TurnIntoLot:
                     car.currentCarBehavior = GPSPlayerScript.carBehavior.TurnIntoLot;
                     break;
                 case typeOfTrigger.Stop:
+                    if (car.isHackedCar)
+                    {
+                        demoScript.updateHackedGPSDirections("You have Arrived!");
+                    }
+                    else
+                    {
+                        demoScript.updateNormalGPSDirections("You have Arrived!");
+                    }
                     car.currentCarBehavior = GPSPlayerScript.carBehavior.Complete;
                     break;
                 case typeOfTrigger.Explain:
                     if (isHacked)
                     {
+                        demoScript.updateHackedGPSDirections("You have Arrived!");
                         demoScript.currentState = GPSDemoScript.State.Explaining;
                     }
                     break;

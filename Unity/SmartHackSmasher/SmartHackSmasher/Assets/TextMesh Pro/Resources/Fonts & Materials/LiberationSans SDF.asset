@@ -56,8 +56,8 @@ Material:
     - _WeightNormal: 0
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _FaceColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
+    - _FaceColor: {r: 0.19828616, g: 0.9528302, b: 0.013483422, a: 1}
+    - _OutlineColor: {r: 0.9622642, g: 0.53973, b: 0.06808472, a: 1}
     - _UnderlayColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -81,6 +81,7 @@ MonoBehaviour:
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
+    m_FaceIndex: 0
     m_FamilyName: Liberation Sans
     m_StyleName: Regular
     m_PointSize: 86

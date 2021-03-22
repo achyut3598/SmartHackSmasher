@@ -29,6 +29,7 @@ public class GPSDemoScript : MonoBehaviour
         switch (currentState)
         {
             case State.Initial:
+                textScript.changeDirectionText("Turn Right in 1000 Feet", "Turn Right in 1000 Feet");
                 PauseGame();
                 if (counter >= 300f)
                 {
@@ -41,6 +42,7 @@ public class GPSDemoScript : MonoBehaviour
                 counter = 0f;
                 break;
             case State.Hacking1:
+                textScript.changeDirectionText("Turn Right in 500 Feet", "Turn Right in 500 Feet");
                 textScript.changeToHackingState1();
                 PauseGame();
                 if (counter > 300f)
@@ -52,9 +54,15 @@ public class GPSDemoScript : MonoBehaviour
                 break;
             case State.Hacking2:
                 textScript.xOffset = -300f;
+                textScript.changeDirectionText("Turn Right in 1500 Feet", "Turn Right in 1500 Feet");
                 textScript.changeToHackingState2();
                 PauseGame();
                 if (counter > 300f)
+                {
+                    textScript.changeToHackingState3();
+                    textScript.changeDirectionText("Turn Right in 500 Feet", "Turn Right in 1500 Feet");
+                }
+                if (counter > 800f)
                 {
                     ResumeGame();
                     counter = 0f;
@@ -78,5 +86,18 @@ public class GPSDemoScript : MonoBehaviour
     void ResumeGame()
     {
         Time.timeScale = 1;
+    }
+
+    public void updateGPSDirections(string normalText, string hackedText)
+    {
+        textScript.changeDirectionText(normalText, hackedText);
+    }
+    public void updateNormalGPSDirections(string normalText)
+    {
+        textScript.changeNormalDirectionText(normalText);
+    }
+    public void updateHackedGPSDirections(string hackedText)
+    {
+        textScript.changeHackedDirectionText(hackedText);
     }
 }

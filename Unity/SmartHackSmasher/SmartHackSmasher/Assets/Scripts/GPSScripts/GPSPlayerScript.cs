@@ -11,6 +11,7 @@ public class GPSPlayerScript : MonoBehaviour
     private Rigidbody rigidbody;
     private float angleTurned = 0f;
     private float dirToTurn = -90f;
+    private int counter = 0;
     public enum carBehavior { Straight, TurnAlongRoad, StraightenOut, RightTurn, TurnIntoLot, Complete };
     public carBehavior currentCarBehavior;
 
@@ -50,8 +51,20 @@ public class GPSPlayerScript : MonoBehaviour
                 break;
             case carBehavior.TurnIntoLot:
                 angleTurned = 0f;
-                transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed*2.5f);//Rotate the Car
-                transform.Translate(Vector3.forward * Time.deltaTime * speed);//Moves Forward based on Verticl Input
+                counter++;
+                if (counter % 3 == 0&&counter>30&& ((counter<180&&!isHackedCar)||(isHackedCar&& counter < 120)))
+                {
+                    transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * 4f);//Rotate the Car
+                }
+                else if(isHackedCar&& counter % 3 == 0 && counter > 90)
+                {
+                    transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * 8f);//Rotate the Car
+                }
+                else if(counter%3 == 0 && counter > 180)
+                {
+                    transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * 8f);//Rotate the Car
+                }
+                transform.Translate(Vector3.forward * Time.deltaTime * speed*.5f);//Moves Forward based on Verticl Input
                 break;
             case carBehavior.Complete:
                 transform.Translate(Vector3.forward * 0);
