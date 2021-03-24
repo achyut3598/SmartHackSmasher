@@ -490,13 +490,13 @@ if __name__ == '__main__':
 
     newFolderName = extract_from_zip('caranomaly.zip','.png')
 
-    kittiModelPath = 'model.json'
-    kittiWeightsPath = 'model.h5'
+    kittiModelPath = 'kittiModel.json'
+    kittiWeightsPath = 'kittiModel.h5'
     myKittiModel = kitti_load_model(kittiModelPath, kittiWeightsPath)
     myKittiResults = kitti_handler(myKittiModel, newFolderName)
 
 
-    hogModelPath = 'zachObjDet.joblib'
+    hogModelPath = 'hogModel.joblib'
     myHogModel = load(hogModelPath)
     myHogResults = testImages(newFolderName, myHogModel)
     myObjectResults = object_results(myKittiResults, myHogResults)
