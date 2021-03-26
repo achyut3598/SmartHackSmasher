@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Smart Hack Smasher</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/eel.js"></script> 
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu+Mono" />
+  <link rel="stylesheet" href="/main.css">
+    <!--<script type="text/javascript" src="/eel.js"></script> -->
+</head>
+
+<body>  
+    <nav class="navbar navbar-default my-0">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Combined</a></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidenav">
+        <div class ="d-flex justify-content-center">
+          <img src="assets/shs.svg" class="rounded" width="50px" height="50px" alt="SHS logo"> 
+        </div>
+    </div>
+
+    <div class = "container-fluid">
+      <div class="row">
+        <div class="col-sm mr-3 d-flex justify-content-end align-items-center">
+              <div class="image-placeholder d-flex justify-content-center align-items-center" id="dispimage">
+                <img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+              </div>
+        </div>
+        <div class ="col-sm d-flex justify-content-center align-items-center" style="text-align: center;">
+          <div class="image-placeholder d-flex justify-content-center align-items-center" id="output-display-3">
+            <h4>Results</h4>
+          </div>
+        </div>
+        <div class="col-sm ml-2 d-flex justify-content-start align-items-center">
+          <div class="image-placeholder d-flex justify-content-center align-items-center" id="dispimage-1">
+            <img id="imageResult-1" src="" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+          </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+      <form onsubmit="combined_pick_file(); return false;">
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="customFile-1" name="filename">
+          <label class="custom-file-label" for="customFile-1" id="file-name-1">Choose file for road sign module</label>
+        </div>
+        <div class="custom-text mb-3">
+          <label for="sel1">Current state of the car</label>
+            <select class="form-control" id="sel1">
+              <option>1: Speed limit (20km/h)</option>
+              <option>2: Speed limit (30km/h)</option>
+              <option>3: Speed limit (50km/h)</option>
+              <option>4: Speed limit (60km/h)</option>
+              <option>5: Speed limit (70km/h)</option>
+              <option>6: Speed limit (80km/h)</option>
+              <option>7: End of speed limit (80km/h)</option>
+              <option>8: Speed limit (100km/h)</option>
+              <option>9: Speed limit (120km/h)</option>
+              <option>10: No passing</option>
+              <option>11: No passing veh over 3.5 tons</option>
+              <option>12: Right-of-way at intersection</option>
+              <option>13: Priority road</option>
+              <option>14: Yield</option>
+              <option>15: Stop</option>
+              <option>16: No vehicles</option>
+              <option>17: Veh > 3.5 tons prohibited</option>
+              <option>18: No entry</option>
+              <option>19: General caution</option>
+              <option>20: Dangerous curve left</option>
+              <option>21: Dangerous curve right</option>
+              <option>22: Double curve</option>
+              <option>23: Bumpy road</option>
+              <option>24: Slippery road</option>
+              <option>25: Road narrows on the right</option>
+              <option>26: Road work</option>
+              <option>27: Traffic signals</option>
+              <option>28: Pedestrians</option>
+              <option>29: Children crossing</option>
+              <option>30: Bicycles crossing</option>
+              <option>31: Beware of ice/snow</option>
+              <option>32: Wild animals crossing</option>
+              <option>33: End speed + passing limits</option>
+              <option>34: Turn right ahead</option>
+              <option>35: Turn left ahead</option>
+              <option>36: Ahead only</option>
+              <option>37: Go straight or right</option>
+              <option>38: Go straight or left</option>
+              <option>39: Keep right</option>
+              <option>40: Keep left</option>
+              <option>41: Roundabout mandatory</option>
+              <option>42: End of no passing</option>
+              <option>43: End no passing veh > 3.5 tons</option>
+          </select>
+          <!--<input type="text" class="form-control" id="stringtext" name="value" placeholder="Enter current state">-->
+        </div>
+
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="customFile-2" name="filename">
+          <label class="custom-file-label" for="customFile-2" id="file-name-2">Choose file for gps module</label>
+        </div>
+        <div class="custom-text mb-3">
+          <input type="text" class="form-control" id="stringtext-1" name="value" placeholder="Enter current coordinates">
+        </div>
+        <div class="custom-text mb-3">
+          <input type="text" class="form-control" id="stringtext-2" name="value" placeholder="Enter destination coordinates">
+        </div>
+
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="customFile-3" name="filename">
+          <label class="custom-file-label" for="customFile-3" id="file-name-3">Choose file for object detection module</label>
+        </div>
+          
+        <div class="mt-3 d-flex justify-content-center">
+          <button type="submit" class="btn-custom-1" id="Button-3">Submit</button>
+        </div>
+        </form>
+      </div>
+    </body>
+  <script type="text/javascript" src="main.js"></script>
+  </html>
+
+    <!---<div class = "container-fluid">
+      <div class ="headbox-opg d-flex justify-content-center">
+        
+      </div>
+    </div> 
+    <label class="form-label" for="customFile"></label>
+    <input type="file" class="form-control" id="customFile" />-->
+    <!--<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>-->
